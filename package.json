@@ -1,0 +1,15 @@
+{
+  "name": "antd-local-icon-font",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:bang88/antd-local-icon-font.git",
+  "author": "bang <sqibang@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.5",
+    "typescript": "^2.2.1"
+  }
+}
