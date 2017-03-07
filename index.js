@@ -53,12 +53,12 @@ var getPath = function () {
 };
 // finding files and replace it 
 var runner = function (_a) {
-    var baseDir = _a.baseDir, _b = _a.fontsPathToSave, fontsPathToSave = _b === void 0 ? __dirname + '/build/static/fonts/' : _b, _c = _a.iconUrl, iconUrl = _c === void 0 ? 'https://at.alicdn.com/t/' : _c, _d = _a.fontReg, fontReg = _d === void 0 ? /@font-face{font-family:anticon;src:url(.*)}$/g : _d, _e = _a.urlReg, urlReg = _e === void 0 ? reg : _e, _f = _a.cssPath, cssPath = _f === void 0 ? __dirname + '/build/static/css/' : _f, _g = _a.newFontsPath, newFontsPath = _g === void 0 ? '/static/fonts/' : _g;
+    var _b = _a === void 0 ? {} : _a, baseDir = _b.baseDir, _c = _b.fontsPathToSave, fontsPathToSave = _c === void 0 ? __dirname + '/build/static/fonts/' : _c, _d = _b.iconUrl, iconUrl = _d === void 0 ? 'https://at.alicdn.com/t/' : _d, _e = _b.fontReg, fontReg = _e === void 0 ? /@font-face{font-family:anticon;src:url(.*)}$/g : _e, _f = _b.urlReg, urlReg = _f === void 0 ? reg : _f, _g = _b.cssPath, cssPath = _g === void 0 ? __dirname + '/build/static/css/' : _g, _h = _b.newFontsPath, newFontsPath = _h === void 0 ? '/static/fonts/' : _h;
+    if (baseDir !== '') {
+        fontsPathToSave = getPath(baseDir, fontsPathToSave);
+        cssPath = getPath(baseDir, cssPath);
+    }
     return exports.finder(cssPath, function (content, filePath) {
-        if (baseDir !== '') {
-            fontsPathToSave = getPath(baseDir, fontsPathToSave);
-            cssPath = getPath(baseDir, cssPath);
-        }
         var cssContents = content.toString();
         var m = cssContents.match(urlReg);
         if (m) {

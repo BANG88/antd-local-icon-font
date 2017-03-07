@@ -89,12 +89,13 @@ const runner = (
         urlReg = reg,
         cssPath = __dirname + '/build/static/css/',
         newFontsPath = '/static/fonts/'
-    }: RunnerOptions) => {
+    }: RunnerOptions = {}) => {
+    if (baseDir !== '') {
+        fontsPathToSave = getPath(baseDir, fontsPathToSave)
+        cssPath = getPath(baseDir, cssPath)
+    }
+    
     return finder(cssPath, function (content, filePath) {
-        if (baseDir !== '') {
-            fontsPathToSave = getPath(baseDir, fontsPathToSave)
-            cssPath = getPath(baseDir, cssPath)
-        }
         const cssContents = content.toString()
         const m = cssContents.match(urlReg)
         if (m) {

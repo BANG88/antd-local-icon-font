@@ -47,5 +47,5 @@ export interface RunnerOptions {
     fontReg?: RegExp;
     iconUrl?: string;
 }
-declare const runner: ({baseDir, fontsPathToSave, iconUrl, fontReg, urlReg, cssPath, newFontsPath}: RunnerOptions) => void;
+declare const runner: ({baseDir, fontsPathToSave, iconUrl, fontReg, urlReg, cssPath, newFontsPath}?: RunnerOptions) => void;
 export default runner;
