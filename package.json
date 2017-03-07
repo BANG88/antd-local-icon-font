@@ -6,10 +6,17 @@
   "author": "bang <sqibang@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "tsc -w"
+    "start": "tsc -w",
+    "prepublish": "tsc"
   },
+  "typings": "./index.d.ts",
   "devDependencies": {
     "@types/node": "^7.0.5",
     "typescript": "^2.2.1"
-  }
+  },
+  "files": [
+    "index.js",
+    "index.js.map",
+    "index.d.ts"
+  ]
 }
