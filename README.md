@@ -21,9 +21,10 @@ yarn add antd-local-icon-font -D
 
 ## Usage
 
-```sh
+If you are using Create-React-App, you can use this scripts as following settings. or you should provide an options.
 
-const runner = require('antd-local-icon-font')
+```sh
+var runner = require('antd-local-icon-font').default
 
 runner(options)
 

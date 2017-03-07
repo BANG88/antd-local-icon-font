@@ -36,7 +36,7 @@ export const finder = function (input: string, cb: (content: Buffer, filePath: s
     const files = fs.readdirSync(input)
     files.forEach(function (file) {
         if (file && path.extname(file) === '.css') {
-            const filePath = input + file
+            const filePath = input + '/' + file
             const content = fs.readFileSync(filePath)
             cb(content, filePath)
         }
@@ -83,18 +83,18 @@ const getPath = (...p) => path.resolve(...p)
 const runner = (
     {
         baseDir,
-        fontsPathToSave = __dirname + '/build/static/fonts/',
+        fontsPathToSave = process.cwd() + '/build/static/fonts/',
         iconUrl = 'https://at.alicdn.com/t/',
         fontReg = /@font-face{font-family:anticon;src:url(.*)}$/g,
         urlReg = reg,
-        cssPath = __dirname + '/build/static/css/',
+        cssPath =  process.cwd() + '/build/static/css/',
         newFontsPath = '/static/fonts/'
     }: RunnerOptions = {}) => {
     if (baseDir !== '') {
         fontsPathToSave = getPath(baseDir, fontsPathToSave)
         cssPath = getPath(baseDir, cssPath)
     }
-    
+
     return finder(cssPath, function (content, filePath) {
         const cssContents = content.toString()
         const m = cssContents.match(urlReg)

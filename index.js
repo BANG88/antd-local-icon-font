@@ -37,7 +37,7 @@ exports.finder = function (input, cb) {
     var files = fs.readdirSync(input);
     files.forEach(function (file) {
         if (file && path.extname(file) === '.css') {
-            var filePath = input + file;
+            var filePath = input + '/' + file;
             var content = fs.readFileSync(filePath);
             cb(content, filePath);
         }
@@ -53,7 +53,7 @@ var getPath = function () {
 };
 // finding files and replace it 
 var runner = function (_a) {
-    var _b = _a === void 0 ? {} : _a, baseDir = _b.baseDir, _c = _b.fontsPathToSave, fontsPathToSave = _c === void 0 ? __dirname + '/build/static/fonts/' : _c, _d = _b.iconUrl, iconUrl = _d === void 0 ? 'https://at.alicdn.com/t/' : _d, _e = _b.fontReg, fontReg = _e === void 0 ? /@font-face{font-family:anticon;src:url(.*)}$/g : _e, _f = _b.urlReg, urlReg = _f === void 0 ? reg : _f, _g = _b.cssPath, cssPath = _g === void 0 ? __dirname + '/build/static/css/' : _g, _h = _b.newFontsPath, newFontsPath = _h === void 0 ? '/static/fonts/' : _h;
+    var _b = _a === void 0 ? {} : _a, baseDir = _b.baseDir, _c = _b.fontsPathToSave, fontsPathToSave = _c === void 0 ? process.cwd() + '/build/static/fonts/' : _c, _d = _b.iconUrl, iconUrl = _d === void 0 ? 'https://at.alicdn.com/t/' : _d, _e = _b.fontReg, fontReg = _e === void 0 ? /@font-face{font-family:anticon;src:url(.*)}$/g : _e, _f = _b.urlReg, urlReg = _f === void 0 ? reg : _f, _g = _b.cssPath, cssPath = _g === void 0 ? process.cwd() + '/build/static/css/' : _g, _h = _b.newFontsPath, newFontsPath = _h === void 0 ? '/static/fonts/' : _h;
     if (baseDir !== '') {
         fontsPathToSave = getPath(baseDir, fontsPathToSave);
         cssPath = getPath(baseDir, cssPath);
