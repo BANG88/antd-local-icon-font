@@ -6,8 +6,7 @@
   "author": "bang <sqibang@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "tsc -w",
-    "prepublish": "tsc"
+    "start": "tsc -w"
   },
   "typings": "./index.d.ts",
   "devDependencies": {

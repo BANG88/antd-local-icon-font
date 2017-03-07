@@ -1,10 +1,6 @@
 # antd-local-icon-font
 
-TODO: Put more badges here.
-
 > Download Antd icon fonts to local and replace the css file&#39;s fonts path.
-
-TODO: Fill out this long description.
 
 ## Table of Contents
 
@@ -25,7 +21,14 @@ yarn add antd-local-icon-font -D
 
 ## Usage
 
-```
+```sh
+
+const runner = require('antd-local-icon-font')
+
+runner(options)
+
+// options are optional please See the source for more info.
+
 ```
 
 ## Contribute
