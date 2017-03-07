@@ -1,3 +1,4 @@
+/// <reference types="node" />
 export declare const formatUrl: (url: string) => string;
 /**
  * download file
@@ -11,7 +12,7 @@ export declare const downloader: (url: string, dest: string, cb: Function) => vo
  * @param input destination
  * @param cb
  */
-export declare const finder: (input: string, cb: Function) => void;
+export declare const finder: (input: string, cb: (content: Buffer, filePath: string) => void) => void;
 export interface RunnerOptions {
     /**
      * base dir
@@ -33,18 +34,18 @@ export interface RunnerOptions {
      * @type {string}
      * @memberOf RunnerOptions
      */
-    fontsSavedPath?: string;
-    fontsPath?: string;
+    fontsPathToSave?: string;
+    newFontsPath?: string;
     /**
      * regexp for match fonts url
      * the default reg is: /((\w+:\/\/)[-a-zA-Z0-9:@;?&=\/%\+\.\*!'\(\),\$_\{\}\^~\[\]'#|]+)/g
      *
-     * @type {string}
+     * @type {RegExp}
      * @memberOf RunnerOptions
      */
-    urlReg?: string;
-    fontReg?: string;
+    urlReg?: RegExp;
+    fontReg?: RegExp;
     iconUrl?: string;
 }
-declare const runner: ({fontsSavedPath, iconUrl, fontReg, urlReg, cssPath, fontsPath}: RunnerOptions) => void;
+declare const runner: ({baseDir, fontsPathToSave, iconUrl, fontReg, urlReg, cssPath, newFontsPath}: RunnerOptions) => void;
 export default runner;

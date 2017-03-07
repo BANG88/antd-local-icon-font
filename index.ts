@@ -32,7 +32,7 @@ export const downloader = function (url: string, dest: string, cb: Function) {
  * @param input destination 
  * @param cb 
  */
-export const finder = function (input: string, cb: Function) {
+export const finder = function (input: string, cb: (content: Buffer, filePath: string) => void) {
     const files = fs.readdirSync(input)
     files.forEach(function (file) {
         if (file && path.extname(file) === '.css') {
@@ -65,53 +65,58 @@ export interface RunnerOptions {
      * @type {string}
      * @memberOf RunnerOptions
      */
-    fontsSavedPath?: string
-    fontsPath?: string
+    fontsPathToSave?: string
+    newFontsPath?: string
     /**
      * regexp for match fonts url 
      * the default reg is: /((\w+:\/\/)[-a-zA-Z0-9:@;?&=\/%\+\.\*!'\(\),\$_\{\}\^~\[\]'#|]+)/g
      * 
-     * @type {string}
+     * @type {RegExp}
      * @memberOf RunnerOptions
      */
-    urlReg?: string
-    fontReg?: string
+    urlReg?: RegExp
+    fontReg?: RegExp
     iconUrl?: string
 }
+const getPath = (...p) => path.resolve(...p)
 // finding files and replace it 
 const runner = (
     {
-     fontsSavedPath = __dirname + '/build/static/fonts/',
+        baseDir,
+        fontsPathToSave = __dirname + '/build/static/fonts/',
         iconUrl = 'https://at.alicdn.com/t/',
         fontReg = /@font-face{font-family:anticon;src:url(.*)}$/g,
         urlReg = reg,
         cssPath = __dirname + '/build/static/css/',
-        fontsPath = '/static/fonts/'
+        newFontsPath = '/static/fonts/'
     }: RunnerOptions) => {
     return finder(cssPath, function (content, filePath) {
-        // create fonts folder if not exists
-        !fs.existsSync(fontsSavedPath) && fs.mkdir(fontsSavedPath, function (err) {
-            if (err) {
-                throw err
-            }
-            console.log('mkdir success')
-        })
-
-        console.log('finding css file')
+        if (baseDir !== '') {
+            fontsPathToSave = getPath(baseDir, fontsPathToSave)
+            cssPath = getPath(baseDir, cssPath)
+        }
         const cssContents = content.toString()
         const m = cssContents.match(urlReg)
         if (m) {
+            // create fonts folder if not exists
+            if (!fs.existsSync(fontsPathToSave)) {
+                fs.mkdir(fontsPathToSave, function (err) {
+                    if (err) {
+                        throw err
+                    }
+                    console.log(`mkdir ${fontsPathToSave} success`)
+                })
+            }
             m.forEach(function (item) {
                 const itemInfo = path.parse(item)
 
                 const shortname = itemInfo.base.replace(/((\?|#).*)/g, '')
 
-                downloader(item, fontsSavedPath + shortname, function (err, c) {
+                downloader(item, fontsPathToSave + '/' + shortname, function (err, c) {
                     if (err) {
                         throw err
                     }
-                    console.log('download ' + shortname + ' success...')
-                    const replacedContents = cssContents.replace(new RegExp(iconUrl, 'gi'), fontsPath)
+                    const replacedContents = cssContents.replace(new RegExp(iconUrl, 'gi'), newFontsPath)
                     fs.writeFile(filePath, replacedContents, function (err) {
                         if (err) {
                             throw err
